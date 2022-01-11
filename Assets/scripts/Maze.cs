@@ -130,34 +130,42 @@ public class Maze {
         }
     }
 
-    public byte[] toPNGBytes(){
-        Texture2D texture = new Texture2D(this.width*10 + 1, this.height*10 + 1, TextureFormat.ARGB32, false);
+    public Texture2D toTexture(){
+
+        const int cellWidth = 3;
+        const int cellHeight = 3;
+
+        Texture2D texture = new Texture2D(this.width*(cellWidth + 1) + 1, this.height*(cellHeight + 1) + 1, TextureFormat.ARGB32, false);
         blockSetTexturePixel(texture, 0, 0, texture.width, texture.height, Color.white);
     
-        for (int x = 0; x < texture.width - 1; x += 10)
+        for (int x = 0; x < texture.width - 1; x += (cellWidth + 1))
         {
-            for (int y = 0; y < texture.height - 1; y += 10)
+            for (int y = 0; y < texture.height - 1; y += (cellHeight + 1))
             {
-                Cell cell = getCell(x/10, y/10);
+                Cell cell = getCell(x/(cellWidth + 1), y/(cellHeight + 1));
                 if(cell.getLeftWall()){
-                    blockSetTexturePixel(texture, x, y, 1, 11, Color.black);
+                    blockSetTexturePixel(texture, x, y, 1, (cellHeight + 2), Color.black);
                 }
                 if(cell.getTopWall()){
-                    blockSetTexturePixel(texture, x, y + 10, 11, 1, Color.black);
+                    blockSetTexturePixel(texture, x, y + (cellHeight + 1), (cellWidth + 2), 1, Color.black);
                 }
                 if(cell.getRightWall()){
-                    blockSetTexturePixel(texture, x + 10, y, 1, 11, Color.black);
+                    blockSetTexturePixel(texture, x + (cellWidth + 1), y, 1, (cellHeight + 2), Color.black);
                 }
                 if(cell.getBottomWall()){
-                    blockSetTexturePixel(texture, x, y, 11, 1, Color.black);
+                    blockSetTexturePixel(texture, x, y, (cellWidth + 2), 1, Color.black);
                 }
             }
         }
-    
+
         // Apply all SetPixel calls
         texture.Apply();
 
-        return texture.EncodeToPNG();
+        return texture;
+    }
+
+    public byte[] toPNGBytes(){
+        return toTexture().EncodeToPNG();
     }
 
     public void saveAsPng(string fullPath) {
