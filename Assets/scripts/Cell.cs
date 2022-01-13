@@ -5,15 +5,30 @@ public class Cell {
 
     public bool[] wallsLTRB;
 
-    public bool visited;
+    public bool visited = false;
+
+    private bool goal = false;
+    private int goalWall = -1;
 
     public Cell(int x, int y){
         this.x = x;
         this.y = y;
 
         wallsLTRB = new bool[4] {true, true, true, true};
-        visited = false;
     }
+
+    public void setGoal(int wallIndex){
+        goal = true;
+        if(wallsLTRB[wallIndex]){
+            goalWall = wallIndex;
+        }else{
+            throw new System.Exception("Cannot set goal wall to a wall that doesn't exist");
+        }
+    }
+
+    public int getGoalWall(){return goalWall;}
+
+    public bool isGoal(){return goal;}
 
     public void setLeftWall(bool value){
         wallsLTRB[0] = value;

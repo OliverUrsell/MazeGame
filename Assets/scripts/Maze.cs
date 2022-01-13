@@ -6,6 +6,8 @@ using UnityEngine;
 public class Maze {
 
     private Cell[,] cells;
+
+    private Cell goal;
     private Stack<Cell> cellStack;
 
     public readonly int width, height;
@@ -14,9 +16,35 @@ public class Maze {
     public Maze(int height, int width){
         this.height = height;
         this.width = width;
-        wallsToBreak = 25;
+        wallsToBreak = (height * width)/4;
         resetCells();
         generateMaze();
+    }
+
+    private void setGoal(){
+        List<int> walls = new List<int>();
+        while(walls.Count == 0){
+            int x, y;
+            UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
+            int choice = UnityEngine.Random.Range(0, 2);
+            if(choice < 0.5f){
+                x = UnityEngine.Random.Range(4*width/5, width);
+                y = UnityEngine.Random.Range(0, height);
+            }else {
+                x = UnityEngine.Random.Range(0, width);
+                y = UnityEngine.Random.Range(4*height/5, height);
+            }
+
+            goal = getCell(x, y);
+            for (int i = 0; i < 4; i++)
+            {
+                if(goal.wallsLTRB[i]){
+                    walls.Add(i);
+                }
+            }
+        }
+
+        goal.setGoal(walls[UnityEngine.Random.Range(0, walls.Count)]);
     }
 
     private void resetCells(){
@@ -117,6 +145,8 @@ public class Maze {
             }
             
         }
+
+        setGoal();
         
     }
 
@@ -125,7 +155,8 @@ public class Maze {
         {
             for (int y = 0; y < height; y++)
             {
-                texture.SetPixel(startX + x, startY + y, color);
+                if(texture.GetPixel(startX + x, startY + y) != Color.yellow)
+                    texture.SetPixel(startX + x, startY + y, color);
             }
         }
     }
@@ -143,6 +174,9 @@ public class Maze {
             for (int y = 0; y < texture.height - 1; y += (cellHeight + 1))
             {
                 Cell cell = getCell(x/(cellWidth + 1), y/(cellHeight + 1));
+
+                if(cell.isGoal()){blockSetTexturePixel(texture, x+1, y+1, cellWidth, cellHeight, Color.yellow);}
+
                 if(cell.getLeftWall()){
                     blockSetTexturePixel(texture, x, y, 1, (cellHeight + 2), Color.black);
                 }

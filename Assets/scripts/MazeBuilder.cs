@@ -11,13 +11,21 @@ public class MazeBuilder : MonoBehaviour
     private Vector3[] newVertices;
     private int[] newTriangles;
 
+    [SerializeField] private Transform floor;
+
     [SerializeField] private Material wallsMaterial;
 
     void Start () {
-        Maze m = new Maze(10, 10);
-        m.saveAsPng("/home/ollie/UnityProjects/MazeGamePrograms/MazeGame/Assets/output.png");
+        Maze m = new Maze(25, 25);
+        HTTPClient.client.PutRequest("maze", m.toPNGBytes());
+        Texture2D mazeTexture = m.toTexture();
+        applyMeshFromTexture(mazeTexture);
+        resizeFloor(mazeTexture.width, mazeTexture.height);
+    }
 
-        applyMeshFromTexture(m.toTexture());
+    private void resizeFloor(int width, int height){
+        floor.localScale = new Vector3(width, 1, height);
+        floor.position = new Vector3(width/2, -2, height/2);
     }
 
     private void applyMeshFromTexture(Texture2D texture){
