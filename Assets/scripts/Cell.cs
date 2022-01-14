@@ -1,3 +1,4 @@
+using UnityEngine;
 
 public class Cell {
 
@@ -8,7 +9,8 @@ public class Cell {
     public bool visited = false;
 
     private bool goal = false;
-    private int goalWall = -1;
+    private float[] goalRelativePosition = new float[2]{-1, -1};
+    private Quaternion goalRelativeRotation;
 
     public Cell(int x, int y){
         this.x = x;
@@ -19,14 +21,32 @@ public class Cell {
 
     public void setGoal(int wallIndex){
         goal = true;
-        if(wallsLTRB[wallIndex]){
-            goalWall = wallIndex;
+        if(wallIndex < 4 && wallsLTRB[wallIndex]){
+            switch(wallIndex){
+                case 0:
+                    goalRelativePosition = new float[2]{1f - 0.5f, Maze.cellHeight/2 + 1f};
+                    goalRelativeRotation = Quaternion.Euler(0, 0, 0);
+                    break;
+                case 1:
+                    goalRelativePosition = new float[2]{Maze.cellWidth/2 + 1f, Maze.cellHeight + 0.5f};
+                    goalRelativeRotation = Quaternion.Euler(0, 90, 0);
+                    break;
+                case 2:
+                    goalRelativePosition = new float[2]{Maze.cellWidth + 0.5f, Maze.cellHeight/2 + 1f};
+                    goalRelativeRotation = Quaternion.Euler(0, 180, 0);
+                    break;
+                case 3:
+                    goalRelativePosition = new float[2]{Maze.cellWidth/2 + 1f, 1f - 0.5f};
+                    goalRelativeRotation = Quaternion.Euler(0, 270, 0);
+                    break;
+            }
         }else{
             throw new System.Exception("Cannot set goal wall to a wall that doesn't exist");
         }
     }
 
-    public int getGoalWall(){return goalWall;}
+    public float[] getGoalRelativePosition(){return goalRelativePosition;}
+    public Quaternion getGoalRelativeRotation(){return goalRelativeRotation;}
 
     public bool isGoal(){return goal;}
 

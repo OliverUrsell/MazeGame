@@ -522,6 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floor: {fileID: 672814363}
   wallsMaterial: {fileID: 2100000, guid: e7cbaf1b1e90e301d9663ecea4792d90, type: 2}
+  goalPrefab: {fileID: 2702317476154567419, guid: 7e6d60c3bba570b8ead247a66f866e2f, type: 3}
 --- !u!4 &462493849
 Transform:
   m_ObjectHideFlags: 0
@@ -1373,12 +1374,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bf296fc962d7184ab14ad1841598d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_System: {fileID: 0}
-  m_MoveSpeed: 2
+  m_System: {fileID: 926276305}
+  m_MoveSpeed: 1
   m_EnableStrafe: 1
   m_UseGravity: 1
   m_GravityApplicationMode: 1
-  m_ForwardSource: {fileID: 0}
+  m_ForwardSource: {fileID: 2010867101}
   m_LeftHandMoveAction:
     m_UseReference: 1
     m_Action:
@@ -1392,7 +1393,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   m_RightHandMoveAction:
-    m_UseReference: 1
+    m_UseReference: 0
     m_Action:
       m_Name: Right Hand Move
       m_Type: 0

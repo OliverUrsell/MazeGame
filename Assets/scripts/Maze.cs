@@ -13,6 +13,9 @@ public class Maze {
     public readonly int width, height;
     private readonly int wallsToBreak;
 
+    public const int cellWidth = 3;
+    public const int cellHeight = 3;
+
     public Maze(int height, int width){
         this.height = height;
         this.width = width;
@@ -20,6 +23,8 @@ public class Maze {
         resetCells();
         generateMaze();
     }
+
+    public Cell getGoal() {return goal;}
 
     private void setGoal(){
         List<int> walls = new List<int>();
@@ -162,9 +167,6 @@ public class Maze {
     }
 
     public Texture2D toTexture(){
-
-        const int cellWidth = 3;
-        const int cellHeight = 3;
 
         Texture2D texture = new Texture2D(this.width*(cellWidth + 1) + 1, this.height*(cellHeight + 1) + 1, TextureFormat.ARGB32, false);
         blockSetTexturePixel(texture, 0, 0, texture.width, texture.height, Color.white);

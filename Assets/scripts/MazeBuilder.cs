@@ -14,6 +14,7 @@ public class MazeBuilder : MonoBehaviour
     [SerializeField] private Transform floor;
 
     [SerializeField] private Material wallsMaterial;
+    [SerializeField] private GameObject goalPrefab;
 
     void Start () {
         Maze m = new Maze(25, 25);
@@ -21,11 +22,20 @@ public class MazeBuilder : MonoBehaviour
         Texture2D mazeTexture = m.toTexture();
         applyMeshFromTexture(mazeTexture);
         resizeFloor(mazeTexture.width, mazeTexture.height);
+        generateGoal(m);
     }
 
     private void resizeFloor(int width, int height){
         floor.localScale = new Vector3(width, 1, height);
         floor.position = new Vector3(width/2, -2, height/2);
+    }
+
+    private void generateGoal(Maze maze){
+        Cell goal = maze.getGoal();
+        float[] goalRelativePosition = goal.getGoalRelativePosition();
+        float x = goal.x * (Maze.cellWidth+1) + goalRelativePosition[0];
+        float y = goal.y * (Maze.cellHeight+1) + goalRelativePosition[1];
+        Instantiate(goalPrefab, new Vector3(x, 0, y), goal.getGoalRelativeRotation());
     }
 
     private void applyMeshFromTexture(Texture2D texture){
