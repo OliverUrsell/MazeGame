@@ -521,7 +521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floor: {fileID: 672814363}
-  wallsMaterial: {fileID: 2100000, guid: e7cbaf1b1e90e301d9663ecea4792d90, type: 2}
+  wallsMaterial: {fileID: 2100000, guid: 723ba6e511d4b07148b10edba05b3366, type: 2}
   goalPrefab: {fileID: 2702317476154567419, guid: 7e6d60c3bba570b8ead247a66f866e2f, type: 3}
 --- !u!4 &462493849
 Transform:
@@ -658,7 +658,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 29a6e2b44aa87b348aa6169644992bf3, type: 2}
+  - {fileID: 2100000, guid: 508f405ee4fb5b64f88162d69719b618, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

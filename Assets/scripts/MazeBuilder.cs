@@ -17,7 +17,7 @@ public class MazeBuilder : MonoBehaviour
     [SerializeField] private GameObject goalPrefab;
 
     void Start () {
-        Maze m = new Maze(25, 25);
+        Maze m = new Maze(3, 3);
         HTTPClient.client.PutRequest("maze", m.toPNGBytes());
         Texture2D mazeTexture = m.toTexture();
         applyMeshFromTexture(mazeTexture);
