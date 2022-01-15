@@ -25,4 +25,8 @@ public class CharacterMovementHelper : CharacterControllerDriver
         // Debug.Log(System.Text.Encoding.UTF8.GetBytes(JsonUtility.ToJson(position)));
         HTTPClient.client.PutRequest("position", JsonUtility.ToJson(position));
     }
+
+    private void OnTriggerEnter(Collider other){
+        Debug.Log("Portal Collided!");
+    }
 }
